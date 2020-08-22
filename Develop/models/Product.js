@@ -36,15 +36,6 @@ Product.init(
       //references the category model id
     }
 
-
-
-
-category_id
-
-Integer
-
-References the category model's id 
-    
   },
   {
     sequelize,
