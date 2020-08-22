@@ -34,14 +34,17 @@ router.get('/:id', (req, res) => {
 
 router.post('/', (req, res) => {
   // create a new category
+  Category.create()
 });
 
 router.put('/:id', (req, res) => {
   // update a category by its `id` value
+  Category.update('id')
 });
 
 router.delete('/:id', (req, res) => {
   // delete a category by its `id` value
+  Category.destroy('id')
 });
 
 module.exports = router;
