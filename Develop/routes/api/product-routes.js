@@ -7,9 +7,8 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 router.get('/', (req, res) => {
   // find all products
   // be sure to include its associated Category and Tag data
-  Product.findAll({
-    include: [Category, Tag]
-  })
+  Product.findAll({})
+  
   .then((resProd)=>{
     res.send(resProd)
   })
@@ -22,9 +21,11 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
   // find a single product by its `id`
   // be sure to include its associated Category and Tag data
+  let productId = req.params.id
+  Product.findOne(
+  {
+    where: {id: productId},
 
-  Product.findOne('category_id', {
-    include: [Category, Tag]
   })
   .then((resProd)=>{
     res.send(resProd)
@@ -107,7 +108,7 @@ router.delete('/:id', (req, res) => {
     {where: {id: req.params.id}
   })
   .then((resProd) =>{
-    res.send(resProd)
+    res.send(res)
   })
 });
 
