@@ -53,7 +53,7 @@ router.post('/', (req, res) => {
       // if no product tags, just respond
       res.status(200).json(product);
     })
-    .then((productTagIds) => res.status(200).json(productTagIds))
+    .then((productTagId) => res.status(200).json(productTagId))
     .catch((err) => {
       console.log(err);
       res.status(400).json(err);
