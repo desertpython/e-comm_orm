@@ -7,10 +7,14 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 router.get('/', (req, res) => {
   // find all products
   // be sure to include its associated Category and Tag data
-  Product.findAll({})
+  Product.findAll({
+    include: [Category,
+    {model: Tag, 
+    through: ProductTag}]
+  })
   
   .then((resProd)=>{
-    res.send(resProd)
+    res.json(resProd)
   })
   .catch((err)=> {
     res.status(500).json(err)
@@ -24,14 +28,23 @@ router.get('/:id', (req, res) => {
   let productId = req.params.id
   Product.findOne(
   {
-    where: {id: productId},
+    where: {id: req.params.id},
+    include: [
+      Category, 
+      {
+        model: Tag,
+        through: ProductTag,
+      }
+    ]
+
+    
 
   })
   .then((resProd)=>{
-    res.send(resProd)
+    res.json(resProd)
   })
   .catch((err)=> {
-    res.status(500).json(err)
+    res.status(400).json(err)
   })
 });
 
@@ -108,8 +121,12 @@ router.delete('/:id', (req, res) => {
     {where: {id: req.params.id}
   })
   .then((resProd) =>{
-    res.send(res)
+    res.json(resProd)
   })
+  .catch((err) => {
+    // console.log(err);
+    res.status(400).json(err);
+  });
 });
 
 module.exports = router;
