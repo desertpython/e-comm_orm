@@ -7,10 +7,14 @@ router.get('/', (req, res) => {
   // find all tags
   // be sure to include its associated Product data
  Tag.findAll({
-    include: [Product]
+    include: [
+      {
+        model: Product,
+        through :ProductTag,
+      }]
   })
   .then((resTag)=>{
-    res.send(resTag)
+    res.json(resTag)
   })
   .catch((err)=> {
     res.status(500).json(err)
@@ -20,14 +24,19 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
   // find a single tag by its `id`
   // be sure to include its associated Product data
-  Tag.findOne('tag_id', {
-    include: [Product]
+  Tag.findOne({
+    where: {
+      id: req.params.id,
+    },
+    include: [{
+      model: Product,
+      through: ProductTag}]
   })
   .then((resTag)=>{
-    res.send(resTag)
+    res.json(resTag)
   })
   .catch((err)=> {
-    res.status(500).json(err)
+    res.status(404).json(err)
   })
 });
 
@@ -35,10 +44,10 @@ router.post('/', (req, res) => {
   // create a new tag
   Tag.create(req.body)
   .then((resTag)=> {
-    res.send(resTag)
+    res.json(resTag)
   })
   .catch((err)=> {
-    res.status(500).json(err)
+    res.status(404).json(err)
   })
 });
 
@@ -48,10 +57,10 @@ router.put('/:id', (req, res) => {
     where: {id: req.params.id}
   })
   .then((resTag) => {
-    res.send(resTag)
+    res.json(resTag)
   })
   .catch((err)=> {
-    res.status(500).json(err)
+    res.status(404).json(err)
   })
 });
 
@@ -61,7 +70,10 @@ router.delete('/:id', (req, res) => {
     {where: {id: req.params.id}
   })
   .then((resTag) =>{
-    res.send(resTag)
+    res.json(resTag)
+  })
+  .catch((err)=> {
+    res.status(404).json(err)
   })
 });
 
