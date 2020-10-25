@@ -14,8 +14,11 @@ Product.belongsTo(Category, {
 
 Category.hasMany(Product, {
   //product has category id which is link between two
-  foreignKey: 'category_id'
+  foreignKey: 'category_id',
+  onDelete: 'CASCADE'
+  
 });
+
 
 // Product belongToMany Tags (through ProductTag)
 
